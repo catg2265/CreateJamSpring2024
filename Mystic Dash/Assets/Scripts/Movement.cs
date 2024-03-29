@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
 
     private Vector2 movement;
     private Rigidbody2D rb;
+    public bool flipped = false;
 
     [SerializeField] private SpriteRenderer playerSprite;
 
@@ -31,6 +32,7 @@ public class Movement : MonoBehaviour
     private void Update()
     {
         Flip();
+        playerSprite.flipX = flipped;
     }
 
     void OnMove(InputValue input)
@@ -54,14 +56,13 @@ public class Movement : MonoBehaviour
     {
         if (movement.x < 0)
         {
-            playerSprite.flipX = true;
+            flipped = true;
         }
         if (movement.x > 0)
         {
-            playerSprite.flipX = false;
+            flipped = false;
         }
     }
-
     private bool IsGrounded()
     {
         return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.1f, groundLayer);
