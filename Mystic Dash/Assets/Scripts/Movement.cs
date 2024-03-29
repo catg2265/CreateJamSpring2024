@@ -8,12 +8,14 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
+
     public Transform GroundCheck;
     public LayerMask groundLayer;
+
     private Vector2 movement;
     private Rigidbody2D rb;
-    [SerializeField] private SpriteRenderer playerSprite;
 
+    [SerializeField] private SpriteRenderer playerSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,11 @@ public class Movement : MonoBehaviour
     {
         Move();
     }
-    
+    private void Update()
+    {
+        Flip();
+    }
+
     void OnMove(InputValue input)
     {
         movement = input.Get<Vector2>();
@@ -38,6 +44,7 @@ public class Movement : MonoBehaviour
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
     }
+
     void Move()
     {
         float moveInput = movement.x;
@@ -47,17 +54,16 @@ public class Movement : MonoBehaviour
     {
         if (movement.x < 0)
         {
-            playerSprite.flipX = false;
+            playerSprite.flipX = true;
         }
         if (movement.x > 0)
         {
-            playerSprite.flipX = true;
+            playerSprite.flipX = false;
         }
     }
+
     private bool IsGrounded()
     {
-
         return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.1f, groundLayer);
-
     }
 }
