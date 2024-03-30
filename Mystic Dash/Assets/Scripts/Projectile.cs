@@ -39,6 +39,8 @@ public class Projectile : MonoBehaviour
         collision.gameObject.GetComponentInChildren<ParticleSystem>().Play();
         GameManager gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         gm.points += 1;
+        this.GetComponentInChildren<Collider2D>().enabled = false;
+        this.GetComponentInChildren<SpriteRenderer>().enabled = false;
         yield return new WaitForSeconds(1f);
         Destroy(collision.gameObject);
         Destroy(this.gameObject);
