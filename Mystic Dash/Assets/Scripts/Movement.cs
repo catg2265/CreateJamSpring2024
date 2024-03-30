@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpTime = 0.3f;
+    [SerializeField] private float totalFreezeTimer = 5f;
 
     public Transform GroundCheck;
     public LayerMask groundLayer;
@@ -18,6 +19,8 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isJumping = false;
     private float jumpTimer;
+    public bool freezeMovement = false;
+    private float freezeTimer;
 
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private PlayerInput playerInput;
@@ -26,12 +29,16 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        freezeTimer = totalFreezeTimer;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move();
+        if (!freezeMovement)
+        {
+            Move();
+        }        
     }
     private void Update()
     {
@@ -59,6 +66,17 @@ public class Movement : MonoBehaviour
         {
             isJumping = false;
             jumpTimer = 0;
+        }
+
+        if (freezeMovement)
+        {
+            freezeTimer -= Time.deltaTime;
+            if (freezeTimer <= 0)
+            {
+                freezeMovement = false;
+                freezeTimer = totalFreezeTimer;
+            }
+                
         }
 
     }

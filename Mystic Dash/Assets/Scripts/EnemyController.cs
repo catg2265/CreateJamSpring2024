@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int attackDamage = 20;
     [SerializeField] private float attackTimer = .5f;
     private float currentAttack = 0;
+    
 
     public Transform GroundCheck;
     public LayerMask groundLayer;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         playerPosition = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
+        Debug.Log(playerPosition.ToString());
         if (IsGrounded())
         {
             transform.position = Vector3.MoveTowards(transform.position, playerPosition, Time.deltaTime * moveSpeed);
@@ -36,18 +38,28 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             HPController playerHP = collision.gameObject.GetComponent<HPController>();
-            if (currentAttack <= 0) 
+            if (currentAttack <= 0)
+            {
                 playerHP.TakeDamage(attackDamage);
+                currentAttack = attackTimer;
+            }
+               
             if (playerHP.currentplayerHealth <= 0)
             {
-                // Kill player
-                // End Game
+                Destroy(collision.gameObject);
+                GameManager gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+                gm.keepSpawning = false;
+                foreach (GameObject i in GameObject.FindGameObjectsWithTag("Enemy"))
+                {
+                    Destroy(i);
+                }
+                gm.EndScreenActivate();
             }
         }
     }
 
     private bool IsGrounded()
     {
-        return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.1f, groundLayer);
+        return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.5f, groundLayer);
     }
 }
