@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        deathTimer = deathTimer - Time.fixedDeltaTime;
+        deathTimer -= Time.fixedDeltaTime;
         rb.velocity = new Vector2(speed, rb.velocity.y);
 
         if (deathTimer <= 0 )

@@ -11,10 +11,11 @@ public class Movement : MonoBehaviour
 
     public Transform GroundCheck;
     public LayerMask groundLayer;
+    public bool flipped = false;
 
     private Vector2 movement;
     private Rigidbody2D rb;
-    public bool flipped = false;
+    private bool isJumping = false;
 
     [SerializeField] private SpriteRenderer playerSprite;
 
@@ -39,7 +40,7 @@ public class Movement : MonoBehaviour
     {
         movement = input.Get<Vector2>();
     }
-    void OnJump(InputValue input)
+    void OnJump()
     {
         if (IsGrounded())
         {
@@ -65,6 +66,6 @@ public class Movement : MonoBehaviour
     }
     private bool IsGrounded()
     {
-        return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.1f, groundLayer);
+        return Physics2D.Raycast(GroundCheck.position, Vector2.down, 0.6f, groundLayer);
     }
 }

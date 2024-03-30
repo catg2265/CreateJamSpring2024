@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentAttack = currentAttack-Time.deltaTime;
+        currentAttack -= Time.deltaTime;
     }
 
     void OnFire()
@@ -41,6 +41,7 @@ public class PlayerAttack : MonoBehaviour
             currentAttack = attackSpeed;
             GameObject proj = Instantiate(projectile, magicSpawnList[0].transform.position, Quaternion.identity);
             proj.GetComponent<Projectile>().speed = -projectileSpeed;
+            proj.GetComponentInChildren<SpriteRenderer>().flipX = true;
         }
     }
 }
