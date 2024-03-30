@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpTime = 0.3f;
 
     public Transform GroundCheck;
     public LayerMask groundLayer;
@@ -16,8 +17,10 @@ public class Movement : MonoBehaviour
     private Vector2 movement;
     private Rigidbody2D rb;
     private bool isJumping = false;
+    private float jumpTimer;
 
     [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Start()
@@ -34,19 +37,43 @@ public class Movement : MonoBehaviour
     {
         Flip();
         playerSprite.flipX = flipped;
+
+        if (IsGrounded() && playerInput.actions["Jump"].WasPressedThisFrame())
+        {
+            isJumping = true;
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+        if (isJumping && playerInput.actions["Jump"].IsPressed())
+        {
+            if (jumpTimer < jumpTime)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                jumpTimer += Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+        if (playerInput.actions["Jump"].WasReleasedThisFrame())
+        {
+            isJumping = false;
+            jumpTimer = 0;
+        }
+
     }
 
     void OnMove(InputValue input)
     {
         movement = input.Get<Vector2>();
     }
-    void OnJump()
+   /* void OnJump()
     {
         if (IsGrounded())
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
-    }
+    }*/
 
     void Move()
     {
