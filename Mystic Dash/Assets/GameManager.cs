@@ -81,8 +81,6 @@ public class GameManager : MonoBehaviour
         {
             int selectedIndex = Random.Range(0, 2);
             GameObject go = Instantiate(enemyPrefab, enemySpawnLocations[selectedIndex].position, Quaternion.identity);
-            if (selectedIndex == 1)
-                go.GetComponentInChildren<SpriteRenderer>().flipX = true;
             if (currentEnemySpawnTimer > .2f)
             {
                 currentEnemySpawnTimer -= .1f;

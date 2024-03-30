@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private float currentAttack = 0;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Collider2D col;
+    public bool enemyEnabled = true;
     
 
     public Transform GroundCheck;
@@ -23,6 +24,14 @@ public class EnemyController : MonoBehaviour
     {
 
         playerPosition = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
+        if (playerPosition.x > transform.position.x)
+        {
+            sprite.flipX = true;
+        }
+        if (playerPosition.x < transform.position.x)
+        {
+            sprite.flipX = false;
+        }
         if (IsGrounded())
         {
             transform.position = Vector3.MoveTowards(transform.position, playerPosition, Time.deltaTime * moveSpeed);
@@ -37,7 +46,8 @@ public class EnemyController : MonoBehaviour
             HPController playerHP = collision.gameObject.GetComponent<HPController>();
             if (currentAttack <= 0)
             {
-                playerHP.TakeDamage(attackDamage);
+                if (enemyEnabled)
+                    playerHP.TakeDamage(attackDamage);
                 currentAttack = attackTimer;
             }
                

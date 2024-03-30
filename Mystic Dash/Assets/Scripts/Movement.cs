@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpTime = 0.3f;
-    [SerializeField] private float totalFreezeTimer = 5f;
+    [SerializeField] private int totalFreezeTimer = 5;
 
     public Transform GroundCheck;
     public LayerMask groundLayer;
@@ -24,12 +24,16 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private CooldownBar cooldownBar;
+    [SerializeField] private GameObject CoolDownBar;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         freezeTimer = totalFreezeTimer;
+        cooldownBar.SetMaxCooldown(totalFreezeTimer);
+        CoolDownBar.SetActive(false);
     }
 
     // Update is called once per frame
@@ -70,11 +74,15 @@ public class Movement : MonoBehaviour
 
         if (freezeMovement)
         {
+            CoolDownBar.SetActive(true);
+            cooldownBar.SetMaxCooldown(totalFreezeTimer);
+            cooldownBar.SetCooldown(Mathf.RoundToInt(freezeTimer));
             freezeTimer -= Time.deltaTime;
             if (freezeTimer <= 0)
             {
                 freezeMovement = false;
                 freezeTimer = totalFreezeTimer;
+                CoolDownBar.SetActive(false);
             }
                 
         }
