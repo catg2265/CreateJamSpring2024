@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private List<GameObject> magicSpawnList = new List<GameObject>();
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float attackDamage = 5f;
+    [SerializeField] private int attackDamage = 5;
     [SerializeField] private float projectileSpeed = 5f;
     [SerializeField] private float attackSpeed = 1f;
 

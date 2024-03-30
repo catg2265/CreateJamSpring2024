@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         if (points > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", points);
+            highscoreText.text = points.ToString();
         }
 
         SpawnEnemies();

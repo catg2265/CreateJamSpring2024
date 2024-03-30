@@ -5,21 +5,24 @@ using UnityEngine;
 public class HPController : MonoBehaviour
 {
 
-    [SerializeField] private float totalplayerHealth = 100f;
-    public float currentplayerHealth;
+    [SerializeField] private int totalplayerHealth = 100;
+    public int currentplayerHealth;
+    [SerializeField] private HealthBar healthBar;
 
     // Start is called before the first frame update
     void Start()
     {
         currentplayerHealth = totalplayerHealth;
+        healthBar.SetMaxHealth(totalplayerHealth);
     }
 
     // Update is called once per frame
     void Update()
     {
         //Add control of hp bar
+        healthBar.SetHealth(currentplayerHealth);
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         currentplayerHealth -= damage;
     }

@@ -67,13 +67,6 @@ public class Movement : MonoBehaviour
     {
         movement = input.Get<Vector2>();
     }
-   /* void OnJump()
-    {
-        if (IsGrounded())
-        {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-        }
-    }*/
 
     void Move()
     {
