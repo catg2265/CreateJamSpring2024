@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int attackDamage = 20;
     [SerializeField] private float attackTimer = .5f;
     private float currentAttack = 0;
+    [SerializeField] private SpriteRenderer sprite;
     
 
     public Transform GroundCheck;
@@ -15,17 +16,12 @@ public class EnemyController : MonoBehaviour
 
     Vector3 playerPosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
     {
+
         playerPosition = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
-        Debug.Log(playerPosition.ToString());
         if (IsGrounded())
         {
             transform.position = Vector3.MoveTowards(transform.position, playerPosition, Time.deltaTime * moveSpeed);
@@ -56,6 +52,11 @@ public class EnemyController : MonoBehaviour
                 gm.EndScreenActivate();
             }
         }
+    }
+    public void DisableThis()
+    {
+        sprite.enabled = false;
+        this.enabled = false;
     }
 
     private bool IsGrounded()

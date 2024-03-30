@@ -30,10 +30,17 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
-            GameManager gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-            gm.points += 1;
-            Destroy(this.gameObject);
+            StartCoroutine(DestroyEnemy(collision));
         }
+    }
+    IEnumerator DestroyEnemy(Collider2D collision)
+    {
+        collision.gameObject.GetComponent<EnemyController>().DisableThis();
+        collision.gameObject.GetComponentInChildren<ParticleSystem>().Play();
+        yield return new WaitForSeconds(1f);
+        Destroy(collision.gameObject);
+        GameManager gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gm.points += 1;
+        Destroy(this.gameObject);
     }
 }
