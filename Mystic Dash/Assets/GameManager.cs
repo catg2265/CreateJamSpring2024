@@ -55,6 +55,10 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+    public void LoadTutorial()
+    {
+        SceneManager.LoadSceneAsync("Tutorial");
+    }
     public void EndScreenActivate()
     {
         int highscore = PlayerPrefs.GetInt("HighScore", 0);

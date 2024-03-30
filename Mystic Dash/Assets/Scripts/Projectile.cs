@@ -37,10 +37,10 @@ public class Projectile : MonoBehaviour
     {
         collision.gameObject.GetComponent<EnemyController>().DisableThis();
         collision.gameObject.GetComponentInChildren<ParticleSystem>().Play();
-        yield return new WaitForSeconds(1f);
-        Destroy(collision.gameObject);
         GameManager gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         gm.points += 1;
+        yield return new WaitForSeconds(1f);
+        Destroy(collision.gameObject);
         Destroy(this.gameObject);
     }
 }

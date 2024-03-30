@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float attackTimer = .5f;
     private float currentAttack = 0;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Collider2D col;
     
 
     public Transform GroundCheck;
@@ -56,6 +57,7 @@ public class EnemyController : MonoBehaviour
     public void DisableThis()
     {
         sprite.enabled = false;
+        col.enabled = false;
         this.enabled = false;
     }
 
