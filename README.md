@@ -1,2 +1,2 @@
 # CreateJamSpring2024
- Urban Fantasy (Challenge: Sacrifice)
+Theme: Urban Fantasy (Challenge: Sacrifice)
